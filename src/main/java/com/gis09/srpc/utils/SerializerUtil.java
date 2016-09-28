@@ -2,10 +2,17 @@ package com.gis09.srpc.utils;
 
 import com.gis09.srpc.config.RPCConfig;
 import com.gis09.srpc.message.RPCRequest;
+import com.gis09.srpc.netty.message.BodyWrapper;
+import com.gis09.srpc.netty.message.Header;
+import com.gis09.srpc.netty.message.Message;
+import com.google.common.collect.Maps;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/9/28.
@@ -45,12 +52,18 @@ public class SerializerUtil {
         ProtostuffIOUtil.mergeFrom(paramArrayOfByte, instance, schema);
         return instance;
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws ClassNotFoundException {
+        Message message=new Message();
+        Header header=new Header();
+        header.setType(Header.TYPE_BI_2R);
+        message.setHeader(header);
         RPCRequest request=new RPCRequest();
-        request.setClassName("xx").setMethodName("yy").setParameters(new Object[]{"12313",new RPCConfig()});
-        byte[] serialize = serialize(request);
-        System.out.println(serialize);
-        Object deserialize = deserialize(serialize,RPCRequest.class);
+        request.setClassName("测试雷鸣");
+        Map<String,Object> params= Maps.newHashMap();
+        params.put("key", request);
+        message.setBodyWrapper(new BodyWrapper(params));
+        byte[] serialize = serialize(message);
+        Object deserialize = deserialize(serialize,Message.class);
         System.out.println(deserialize);
     }
 

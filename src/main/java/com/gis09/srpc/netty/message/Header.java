@@ -22,7 +22,7 @@ public class Header {
     private long sessionId;//sessionId  这里其实应该指的是客户端id
     private Byte type; //消息类型
     private Byte priority=TYPE_PRIORITY_DEFAULT; //消息优先级别
-    private Map<String, Object> attachment=new HashMap<String, Object>(); //附件
+    private Map<String, String> attachment=new HashMap<String, String>(); //附件
 
     public int getVersion() {
         return version;
@@ -69,12 +69,29 @@ public class Header {
         return this;
     }
 
-    public Map<String, Object> getAttachment() {
+    public Map<String, String> getAttachment() {
         return attachment;
     }
 
-    public Header setAttachment(Map<String, Object> attachment) {
+    public Header setAttachment(Map<String, String> attachment) {
         this.attachment = attachment;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Header{" +
+                "version=" + version +
+                ", length=" + length +
+                ", sessionId=" + sessionId +
+                ", type=" + type +
+                ", priority=" + priority +
+                ", attachment=" + attachment +
+                '}';
+    }
+    public static void main(String args[]){
+        Header header=new Header();
+        header.setType(Header.TYPE_BI_2R);
+        System.out.println(header);
     }
 }

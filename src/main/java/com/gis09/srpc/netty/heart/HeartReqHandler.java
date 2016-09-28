@@ -21,7 +21,7 @@ public class HeartReqHandler extends ChannelHandlerAdapter {
         Message message = (Message) msg;
         if ((message.getHeader() != null) && (message.getHeader().getType() == Header.TYPE_ACK_RESP)) {
             this.heartbeat = ctx.executor().scheduleAtFixedRate(new HeartTask(ctx), 0L, 15L, TimeUnit.SECONDS);
-            ctx.fireChannelRead(msg);//而且还要处理业务信息了
+            //ctx.fireChannelRead(msg);//而且还要处理业务信息了
         } else if ((message.getHeader() != null) && (message.getHeader().getType() == Header.TYPE_HEART_RESP)) {
             if (log.isInfoEnabled())
                 log.info("the server heart response");

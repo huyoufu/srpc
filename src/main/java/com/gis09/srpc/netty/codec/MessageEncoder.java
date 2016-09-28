@@ -1,5 +1,6 @@
 package com.gis09.srpc.netty.codec;
 
+import com.gis09.srpc.message.RPCRequest;
 import com.gis09.srpc.netty.message.Message;
 import com.gis09.srpc.utils.SerializerUtil;
 import io.netty.buffer.ByteBuf;
@@ -29,7 +30,7 @@ public class MessageEncoder extends MessageToByteEncoder<Message> {
         String key=null;
         byte[] key_array=null;
         Object value=null;
-        for (Map.Entry<String, Object> entry : msg.getHeader().getAttachment().entrySet()) {
+        for (Map.Entry<String, String> entry : msg.getHeader().getAttachment().entrySet()) {
             key=entry.getKey();
             key_array=key.getBytes("utf-8");
             buf.writeInt(key_array.length);
@@ -40,14 +41,27 @@ public class MessageEncoder extends MessageToByteEncoder<Message> {
         key=null;
         key_array=null;
         value=null;
-        if (msg.getBody()!=null) {
-            objectEncode(msg.getBody(), buf);
+        if (msg.getBodyWrapper()!=null) {
+            objectEncode(msg.getBodyWrapper(), buf);
         }else{
             buf.writeInt(0);
         }
         buf.setInt(4, buf.readableBytes()); //这里是因为length的位置是4 所以 其实将整个message消息体的大小写进去了
     }
+    private void attachmentEncode(String s,ByteBuf out){
+        _objectEncode(s, out);
+    }
+
     private void objectEncode(Object obj,ByteBuf out){
+        //获取obj的类名
+        String className = obj.getClass().getName();
+        System.out.println(className);
+        _objectEncode(className,out);
+        _objectEncode(obj,out);
+    }
+    
+
+    private void _objectEncode(Object obj,ByteBuf out){
         int length_pos=out.writerIndex();//获取当前buf的写位置的索引
         out.writeBytes(EMPTY_ARRAY);
         byte[] serialize = SerializerUtil.serialize(obj);

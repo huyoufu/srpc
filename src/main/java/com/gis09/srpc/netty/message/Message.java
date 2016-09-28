@@ -5,7 +5,7 @@ package com.gis09.srpc.netty.message;
  */
 public class Message {
     private Header header;
-    private Object body;
+    private BodyWrapper bodyWrapper;
 
     public Header getHeader() {
         return header;
@@ -16,12 +16,11 @@ public class Message {
         return this;
     }
 
-    public Object getBody() {
-        return body;
+    public BodyWrapper getBodyWrapper() {
+        return bodyWrapper;
     }
 
-    public Message setBody(Object body) {
-        this.body = body;
-        return this;
+    public void setBodyWrapper(BodyWrapper bodyWrapper) {
+        this.bodyWrapper = bodyWrapper;
     }
 }
