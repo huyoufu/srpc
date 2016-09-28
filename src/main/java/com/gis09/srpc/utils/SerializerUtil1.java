@@ -10,7 +10,7 @@ import io.protostuff.runtime.RuntimeSchema;
 /**
  * Created by huyoufu on 2016/9/27.
  */
-public class SerializerUtil {
+public class SerializerUtil1 {
     public static <T> byte[] serialize(T obj) {
         if (obj == null) {
             throw new RuntimeException("序列化对象(" + obj + ")!");
