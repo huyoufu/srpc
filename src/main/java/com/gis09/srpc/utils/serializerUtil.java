@@ -1,5 +1,7 @@
 package com.gis09.srpc.utils;
 
+import com.gis09.srpc.config.RPCConfig;
+import com.gis09.srpc.message.RPCRequest;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
@@ -44,48 +46,12 @@ public class SerializerUtil {
         return instance;
     }
     public static void main(String[] args){
-        Student Student=new Student("xiaoming","18");
-        byte[] serialize = serialize(Student);
-        SerializerUtil.Student deserialize = deserialize(serialize, Student.getClass());
+        RPCRequest request=new RPCRequest();
+        request.setClassName("xx").setMethodName("yy").setParameters(new Object[]{"12313",new RPCConfig()});
+        byte[] serialize = serialize(request);
+        System.out.println(serialize);
+        Object deserialize = deserialize(serialize,RPCRequest.class);
         System.out.println(deserialize);
-    }
-    private static class Student{
-        private String name;
-        private String age;
-
-        public Student() {
-        }
-
-        @Override
-        public String toString() {
-            return "Student{" +
-                    "name='" + name + '\'' +
-                    ", age='" + age + '\'' +
-                    '}';
-        }
-
-        public Student(String name, String age) {
-            this.name = name;
-            this.age = age;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Student setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public String getAge() {
-            return age;
-        }
-
-        public Student setAge(String age) {
-            this.age = age;
-            return this;
-        }
     }
 
 }
