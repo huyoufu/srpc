@@ -7,6 +7,9 @@ import com.gis09.srpc.netty.message.BodyWrapper;
 import com.gis09.srpc.netty.message.Header;
 import com.gis09.srpc.netty.message.Message;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.locks.Lock;
+
 /**
  * Created by huyoufu on 2016/9/27.
  */
@@ -14,9 +17,19 @@ public class RPCClient {
     private Client client;
     private ClientConfig clientConfig;
     private volatile boolean isInited=false;
+    private CountDownLatch countDownLatch=new CountDownLatch(1);
     public void init(){
         client.init();
-        client.connect();
+        Thread thread = new Thread(() -> {
+            client.connect();
+        });
+        thread.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Thread.State state = thread.getState();
         isInited=true;
     }
     public RPCClient (String serverHost){

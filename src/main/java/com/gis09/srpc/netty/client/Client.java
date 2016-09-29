@@ -19,6 +19,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -69,15 +70,18 @@ public class Client {
         try {
             ChannelFuture future = bootstrap.connect(clientConfig.getServerHost(), clientConfig.getServerPort()).sync();
             channel = future.channel();
-            //this.channelTables.put("srpc", future.channel());
+            logger.info("负责发送内容的channel已经设置好");
+            channel.closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("client occur exception {}", e.getCause());
+        }finally {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         Thread.sleep(clientConfig.getReconnectInterval());
+                        logger.info("开始重新连接"+new Date());
                         connect();// 发起重连
                     } catch (Exception ex) {
                         ex.printStackTrace();

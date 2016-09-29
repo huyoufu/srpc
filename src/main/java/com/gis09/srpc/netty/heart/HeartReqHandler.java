@@ -40,8 +40,8 @@ public class HeartReqHandler extends ChannelHandlerAdapter {
             }
             this.heartbeat = null;
         }
-        //ctx.close();//关闭当前链路
-        throw new RuntimeException(" 发生异常 关闭客户端 等待重连");
+        ctx.close();//关闭当前链路
+        //throw new RuntimeException(" 发生异常 关闭客户端 等待重连");
     }
     private class HeartTask implements Runnable {
         private final ChannelHandlerContext ctx;
