@@ -34,6 +34,7 @@ public class Client {
     private EventLoopGroup group = new NioEventLoopGroup();
     private ClientConfig clientConfig;
     private ConcurrentHashMap<String, Channel> channelTables = new ConcurrentHashMap<String, Channel>();
+    private Channel channel;
     /**
      * 构造函数 必须传入一个clientConfig
      * @param clientConfig
@@ -67,13 +68,11 @@ public class Client {
     public void connect() {
         try {
             ChannelFuture future = bootstrap.connect(clientConfig.getServerHost(), clientConfig.getServerPort()).sync();
-            System.out.println("发送channel");
-            this.channelTables.put("srpc", future.channel());
+            channel = future.channel();
+            //this.channelTables.put("srpc", future.channel());
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("client occur exception {}",e.getCause());
-
-        } /*finally {
+            logger.error("client occur exception {}", e.getCause());
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -85,10 +84,10 @@ public class Client {
                     }
                 }
             });
-        }*/
+        }
     }
     public void send(Message message){
-        NioSocketChannel nioSocketChannel= (NioSocketChannel) this.channelTables.get("srpc");
+        NioSocketChannel nioSocketChannel= (NioSocketChannel) this.channel;
         nioSocketChannel.writeAndFlush(message);
     }
     public static void main(String args[]) throws InterruptedException {

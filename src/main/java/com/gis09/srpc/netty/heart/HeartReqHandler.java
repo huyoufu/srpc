@@ -2,6 +2,7 @@ package com.gis09.srpc.netty.heart;
 
 import com.gis09.srpc.netty.message.Header;
 import com.gis09.srpc.netty.message.Message;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.concurrent.ScheduledFuture;
@@ -39,7 +40,7 @@ public class HeartReqHandler extends ChannelHandlerAdapter {
             }
             this.heartbeat = null;
         }
-        ctx.close();//关闭当前链路
+        //ctx.close();//关闭当前链路
         throw new RuntimeException(" 发生异常 关闭客户端 等待重连");
     }
     private class HeartTask implements Runnable {

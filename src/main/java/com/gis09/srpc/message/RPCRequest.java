@@ -1,6 +1,7 @@
 package com.gis09.srpc.message;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by huyoufu on 2016/9/27.
@@ -57,5 +58,16 @@ public class RPCRequest implements Serializable{
     public RPCRequest setParameters(Object[] parameters) {
         this.parameters = parameters;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "RPCRequest{" +
+                "requestId='" + requestId + '\'' +
+                ", className='" + className + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", parameterTypes=" + Arrays.toString(parameterTypes) +
+                ", parameters=" + Arrays.toString(parameters) +
+                '}';
     }
 }

@@ -145,4 +145,15 @@ public class ClientConfig {
         this.password = password;
     }
 
+    public ClientConfig(String serverHost) {
+        this.serverHost = serverHost;
+    }
+
+    public ClientConfig(String serverHost, int serverPort) {
+        this.serverHost = serverHost;
+        this.serverPort = serverPort;
+    }
+
+    public ClientConfig() {
+    }
 }
