@@ -15,4 +15,5 @@ public interface ServiceFactory {
        return buildAsynService(true,serviceClass);
     }
     AsynService buildAsynService(boolean single,Class serviceClass);
+
 }
