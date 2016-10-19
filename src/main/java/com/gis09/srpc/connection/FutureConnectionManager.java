@@ -33,7 +33,5 @@ public class FutureConnectionManager implements ConnectionManager{
     public void setThreshold(float threshold) {
         this.threshold = threshold;
     }
-    public void checkSize(){
-
-    }
+    public void checkSize(){}
 }
