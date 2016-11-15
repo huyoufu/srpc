@@ -20,7 +20,7 @@ public class FutureConnectionManager implements ConnectionManager{
     private Map<RPCRequestFuture,RPCResponseFuture> taskContainer= Maps.newConcurrentMap();
     @Override
     public void service(RPCRequest request, RPCResponse response) {
-        _service((RPCRequestFuture)request,(RPCResponseFuture)response);
+        _service((RPCRequestFuture)request,null);
     }
     public void _service(RPCRequestFuture requestFuture,RPCResponseFuture responseFuture){
 

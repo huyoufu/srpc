@@ -37,4 +37,13 @@ public class RPCResponse implements Serializable {
         this.result = result;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "RPCResponse{" +
+                "requestId='" + requestId + '\'' +
+                ", throwable=" + throwable +
+                ", result=" + result +
+                '}';
+    }
 }

@@ -1,16 +1,34 @@
 package com.gis09.srpc.message;
 
-/**
- * Created by Administrator on 2016/10/8.
- */
-public class RPCResponseFuture extends RPCResponse {
-    private long expireTime;
+import com.gis09.srpc.remoting.RemotingException;
 
-    public long getExpireTime() {
-        return expireTime;
-    }
+public interface RPCResponseFuture {
+    /**
+     * get result.
+     *
+     * @return result.
+     */
+    Object get() throws RemotingException;
 
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
-    }
+    /**
+     * get result with the specified timeout.
+     *
+     * @param timeoutInMillis timeout.
+     * @return result.
+     */
+    Object get(int timeoutInMillis) throws RemotingException;
+
+    /**
+     * set callback.
+     *
+     * @param callback
+     */
+    //void setCallback(ResponseCallback callback);
+
+    /**
+     * check is done.
+     *
+     * @return done or not.
+     */
+    boolean isDone();
 }
